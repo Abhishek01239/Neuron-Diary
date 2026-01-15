@@ -1,9 +1,11 @@
 import tensorflow as tf
 import numpy as np
+import pandas as pd
 
-# Training data
-x = np.array([1, 2, 3, 4, 5], dtype=float)
-y = np.array([2, 3, 4, 5, 6], dtype=float)
+data = pd.read_csv("data.csv")
+
+x = data['input'].values
+y = data['output'].values
 
 # Simple model
 model = tf.keras.Sequential([
