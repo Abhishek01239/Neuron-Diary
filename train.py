@@ -9,7 +9,8 @@ y = data['output'].values
 
 # Simple model
 model = tf.keras.Sequential([
-    tf.keras.layers.Dense(1, input_shape=[1])
+    tf.keras.layers.Dense(1, input_shape=[1]),
+    tf.keras.layers.Dense(1)
 ])
 
 model.compile(
