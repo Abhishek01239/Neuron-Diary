@@ -1,19 +1,24 @@
 import tensorflow as tf
 import numpy as np
 
-def get_valid_number():
+def get_numbers():
     while True:
+        user_input = input(
+            "Enter numbers separated by commas (e.g. 1, 5, 10):"
+        )
         try:
-            value = float(input("Enter a number"))
-            return value
+            numbers = [float(x.strip()) for x in user_input.split(",")]
+            return np.array(numbers).reshape(-1,1)
         except ValueError:
             print("Invalid input. Please enter a numeric value.")
 
 # Load trained model
 model = tf.keras.models.load_model("model.h5")
 
-num = get_valid_number()
+inputs = get_numbers()
 
-prediction = model.predict(np.array([[num]]))
+prediction = model.predict(inputs)
 
-print(f"🤖 AI Prediction: {prediction[0][0]}")
+print("\n🤖 AI Prediction: ")
+for i, pred in zip(inputs.flatten(), prediction.flatten()):
+    print(f"  {i}->{pred:.2f}")
