@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import matplotlib.pyplot as plt
 
 def get_numbers():
     while True:
@@ -17,8 +18,15 @@ model = tf.keras.models.load_model("model.h5")
 
 inputs = get_numbers()
 
-prediction = model.predict(inputs)
+predictions = model.predict(inputs)
 
 print("\n🤖 AI Prediction: ")
-for i, pred in zip(inputs.flatten(), prediction.flatten()):
+for i, pred in zip(inputs.flatten(), predictions.flatten()):
     print(f"  {i}->{pred:.2f}")
+
+plt.figure()
+plt.scatter(inputs, predictions)
+plt.xlabel("Input Numbers")
+plt.ylabel("Prediction Output")
+plt.title("AI Number Prediction Visualization")
+plt.show()
