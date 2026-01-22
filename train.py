@@ -2,9 +2,9 @@ import tensorflow as tf
 import numpy as np
 import pandas as pd
 import os
+import matplotlib.pyplot as plt
 
 data = pd.read_csv("data.csv")
-
 x = data['input'].values
 y = data['output'].values
 
@@ -26,9 +26,16 @@ model.compile(
 )
 
 # Train model
-model.fit(x, y, epochs=200)
+history = model.fit(x, y, epochs=200, verbose = 0)
 
 # Save model
 model.save(MODEL_PATH)
+
+plt.figure()
+plt.plot(history.history['loss'])
+plt.xlabel("Epochs")
+plt.ylabel("LOSS")
+plt.title("Training Loss Over Time")
+plt.show()
 
 print("✅ Model trained and saved")
