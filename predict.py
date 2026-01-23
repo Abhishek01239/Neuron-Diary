@@ -1,38 +1,37 @@
 import tensorflow as tf
 import numpy as np
-import matplotlib.pyplot as plt
 import os
+import matplotlib.pyplot as plt
 
-def get_latest_model():
-    model_files = sorted(
-        [f for f in os.listdit("model") if f.endswith(".h5")]
-    )
-    return os.path.join("model", model_files[-1])
+# Load latest model
+model_files = sorted([f for f in os.listdir("model") if f.endswith(".h5")])
+model = tf.keras.models.load_model(os.path.join("model", model_files[-1]),
+                                   compile = False)
 
-def get_numbers():
-    while True:
-        user_input = input(
-            "Enter numbers separated by commas (e.g. 1, 5, 10):"
-        )
-        try:
-            numbers = [float(x.strip()) for x in user_input.split(",")]
-            return np.array(numbers).reshape(-1,1)
-        except ValueError:
-            print("Invalid input. Please enter a numeric value.")
+# Load scaler
+x_min, x_max, y_min, y_max = np.load("model/scaler.npy")
 
-# Load trained model
-model = tf.keras.models.load_model("model.h5")
+# Input
+user_input = input("🔢 Enter numbers separated by commas: ")
+nums = np.array([float(x.strip()) for x in user_input.split(",")]).reshape(-1, 1)
 
-inputs = get_numbers()
-predictions = model.predict(inputs)
+# Normalize input
+nums_norm = (nums - x_min) / (x_max - x_min)
 
-print("\n🤖 AI Prediction: ")
-for i, pred in zip(inputs.flatten(), predictions.flatten()):
-    print(f"{i}->{pred:.2f}")
+# Predict
+pred_norm = model.predict(nums_norm)
 
+# De-normalize output
+pred = pred_norm * (y_max - y_min) + y_min
+
+print("\n🤖 AI Predictions:")
+for i, p in zip(nums.flatten(), pred.flatten()):
+    print(f"{i} → {p:.2f}")
+
+# Plot
 plt.figure()
-plt.scatter(inputs, predictions)
-plt.xlabel("Input Numbers")
-plt.ylabel("Prediction Output")
-plt.title("AI Number Prediction Visualization")
+plt.scatter(nums, pred)
+plt.xlabel("Input")
+plt.ylabel("Prediction")
+plt.title("Normalized Model Prediction")
 plt.show()
