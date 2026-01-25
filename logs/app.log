@@ -1,0 +1,5 @@
+2026-01-26 00:29:03,872 | INFO | \U0001f680 Prediction script started
+2026-01-26 00:29:04,385 | INFO | Loaded model: model_v3.h5
+2026-01-26 00:29:08,609 | INFO | User input: [1.0, 5.0]
+2026-01-26 00:29:09,364 | INFO | Prediction history saved
+2026-01-26 00:29:16,751 | INFO | Prediction completed successfully
