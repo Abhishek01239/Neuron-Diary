@@ -1,29 +1,35 @@
 import tensorflow as tf
 import pandas as pd
-import os
 import numpy as np
+import os
 import matplotlib.pyplot as plt
+import config
 
-# Load data
+# Load dataset
 data = pd.read_csv("data.csv")
 x = data["input"].values.astype(float)
 y = data["output"].values.astype(float)
 
-# Normalize (min-max scaling)
+# Normalize data (min-max)
 x_min, x_max = x.min(), x.max()
 y_min, y_max = y.min(), y.max()
 
 x_norm = (x - x_min) / (x_max - x_min)
 y_norm = (y - y_min) / (y_max - y_min)
 
-# Save normalization values
-np.save("model/scaler.npy", np.array([x_min, x_max, y_min, y_max]))
+# Ensure model directory exists
+os.makedirs(config.MODEL_DIR, exist_ok=True)
+
+# Save scaler values
+np.save(config.SCALER_PATH, np.array([x_min, x_max, y_min, y_max]))
 
 # Model versioning
-MODEL_DIR = "model"
-MODEL_VERSION = "model_v3.h5"
-MODEL_PATH = os.path.join(MODEL_DIR, MODEL_VERSION)
-os.makedirs(MODEL_DIR, exist_ok=True)
+existing_models = [
+    f for f in os.listdir(config.MODEL_DIR) if f.endswith(".h5")
+]
+version = len(existing_models) + 1
+model_name = f"model_v{version}.h5"
+model_path = os.path.join(config.MODEL_DIR, model_name)
 
 # Build model
 model = tf.keras.Sequential([
@@ -33,21 +39,22 @@ model = tf.keras.Sequential([
 
 model.compile(
     optimizer="adam",
-    loss="mse"
+    loss=tf.keras.losses.MeanSquaredError()
 )
 
-# Train
-history = model.fit(x_norm, y_norm, epochs=500, verbose=0)
+# Train model
+history = model.fit(x_norm, y_norm, epochs=200, verbose=0)
 
 # Save model
-model.save(MODEL_PATH)
+model.save(model_path)
 
-# Plot loss
+# Plot training loss
 plt.figure()
 plt.plot(history.history["loss"])
 plt.xlabel("Epochs")
 plt.ylabel("Loss")
-plt.title("Normalized Training Loss")
+plt.title("Training Loss (Normalized Data)")
 plt.show()
 
-print(f"✅ Model trained with normalization and saved as {MODEL_VERSION}")
+print(f"✅ Model trained and saved as {model_name}")
+print(f"📊 Training range: [{x_min}, {x_max}]")
