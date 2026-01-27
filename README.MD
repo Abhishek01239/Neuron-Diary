@@ -1,81 +1,42 @@
 # 🧠 Neuron Diary
 
-A daily-updated AI learning lab where I build, improve, and experiment with machine learning models using TensorFlow.
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-ML-orange)
+![Status](https://img.shields.io/badge/Status-Active-success)
+![Learning](https://img.shields.io/badge/Learning-Daily%20Progress-brightgreen)
+
+Neuron Diary is a simple but production-style AI project built as a **daily learning journey**.
+The goal is to practice **real machine learning workflows**, not just theory.
+
+This project trains a neural network on numeric data, tracks model versions, validates inputs,
+logs predictions, and provides a clean CLI experience.
 
 ---
 
-## 🚀 Project Overview
-
-Neuron Diary is a personal AI project where I:
-- Build simple AI tools
-- Improve them daily
-- Push consistent updates to GitHub
-- Learn machine learning step-by-step in a practical way
-
-This project starts from a basic number predictor and gradually evolves into a more advanced AI system.
-
----
-
-## ✨ Features (So Far)
-
-- 📊 CSV-based training data
-- 🧠 Neural network with hidden layer
-- 🔢 Batch prediction support
-- ❌ Input validation & error handling
-- 📈 Visualization of predictions using matplotlib
-- 🔁 Daily GitHub commits
+## 🚀 Features
+- Neural Network using TensorFlow
+- Model versioning (v1, v2, v3…)
+- Data normalization (Min-Max scaling)
+- Safe prediction range validation
+- Logging system (app.log)
+- Prediction history tracking
+- Config-driven design
+- Clean CLI UX
 
 ---
 
-## 🛠️ Tech Stack
-
-- Python
-- TensorFlow / Keras
-- NumPy
-- Pandas
-- Matplotlib
+## 🧠 What This Project Demonstrates
+- How ML models learn from data (not rules)
+- Why normalization matters
+- Handling real-world ML edge cases
+- Writing maintainable, scalable Python code
+- Daily GitHub progress & discipline
 
 ---
 
-## 📂 Project Structure
+## ▶️ How to Run the Project
 
-```text
-Neuron-Diary/
-├── data.csv
-├── train.py
-├── predict.py
-├── model.h5
-└── README.md
-
-▶️ How to Run the Project
-
-1️⃣ Clone the Repository
+### 1️⃣ Clone the Repository
+```bash
 git clone https://github.com/Abhishek01239/Neuron-Diary.git
 cd Neuron-Diary
-
-2️⃣ Install Dependencies
-pip install tensorflow pandas matplotlib
-
-3️⃣ Train the Model
-python train.py
-
-4️⃣ Make Predictions
-python predict.py
-
-
-Enter values like:
-
-1, 5, 10
-
-📈 Example Output
-🤖 AI Predictions:
-1 → 2.00
-5 → 6.01
-10 → 11.02
-
-
-A graph window will appear showing:
-
-X-axis: Input numbers
-
-Y-axis: Predicted values
